@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 title: "Data Engineering Zoomcamp - Week 1 - Docker"
 permalink: /week1_docker
 ---
