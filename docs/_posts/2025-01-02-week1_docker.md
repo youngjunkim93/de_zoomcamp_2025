@@ -3,63 +3,71 @@ layout: default
 title: "Data Engineering Zoomcamp - Week 1 - Docker"
 permalink: /week1_docker
 ---
-As I prepare for transition into data field, the first thing I decided to do is to participate in Data Engineering zoomcamp. It is a five-week virtual **free** bootcamp organized by [Datatalks.club](https://datatalks.club/). Since successful data science and machine learning projects rely on the availability of high-quality datasets, data engineering is getting more and more important. I am excited to learn the important concepts and tools of data engineering and to gain hands-on experience using them on real data. 
+As I embark on my journey into the data field, I’ve decided to kickstart the process by joining the Data Engineering Zoomcamp—a **free** five-week virtual bootcamp organized by [Datatalks.club](https://datatalks.club/). With data engineering playing a pivotal role in ensuring the success of data science and machine learning projects, this program is an exciting opportunity to dive into key concepts and tools while gaining hands-on experience with real-world data.
 
-The first tool we will learn about is **Docker**.
+The first tool we are diving into is **Docker**.
 
 ## What is Docker?
 
 According to Wikipedia, Docker is
 
-> A set of platform as a service (PaaS) products that use OS-level virtualization to deliver software in packages called containers.
+> Docker is a set of platform-as-a-service (PaaS) products that use OS-level virtualization to deliver software in packages called containers.
 
-Docker basically makes **containers** that run independently, so whatever is done outside the container won't affect the container and whatever is done inside the container won't affect the outside. 
-
-For this reason, Docker is used for ...
+In simpler terms, Docker creates **containers**—isolated environments that ensure what happens inside a container doesn’t affect the outside, and vice versa. This makes Docker a powerful tool for:
 
 - Reproducibility
-- Local experiments
+- Local experimentation
 - Integration tests (CI/CD)
-- Running pipelines on the cloud (AWS batch, Kubernetes)
-- Serverless computing ... services such as AWS Lambda allows us to define environments as docker images
+- Running pipelines on the cloud (e.g., AWS Batch, Kubernetes)
+- Serverless computing (e.g., defining environments for AWS Lambda using Docker images)
 
-I have been using Docker a lot on my NAS without knowing so much about it. I used Docker mostly to run some programs independently of my NAS system to prevent messing up the system while setting up the programs. After watching the lecture on Docker, I was impressed at myself that I was using Docker correctly even without fully understanding what it was! :) 
+Interestingly, I’ve used Docker extensively on my NAS to run programs independently without fully grasping its mechanism. Watching the lecture on Docker gave me a sense of pride, realizing I had been using it correctly all along! :)
 
-## Installation & Setup
+## **Installation & Setup**
 
-I ran all the steps below on my MacBook, so it may not work 100% for Windows or Linux environment.
+I used my MacBook to install Docker Desktop. If you’re on Windows or Linux, the steps might differ slightly.
 
-First, installed Docker Desktop from [https://www.docker.com/get-started/](https://www.docker.com/get-started/). It automatically set up Docker CLI during installation and initial setup. 
+To get started, I downloaded Docker Desktop from [https://www.docker.com/get-started/](https://www.docker.com/get-started/). It automatically set up Docker CLI during installation and initial setup. 
 
-To test successful installation, we can run the following command on Terminal.
+To confirm a successful installation, run the following command in the terminal:
 
 ```bash
 docker run hello-world
 ```
 
-If the installation was successful, you will see output like `"Hello from Docker! This message shows that your installation appears to be working correctly."
+If everything is set up correctly, you’ll see a message like this:
+
+`"Hello from Docker! This message shows that your installation appears to be working correctly."`
 
 ## Running Containers from command-line
 
 ### Dissecting `hello-world`
 
-You may wonder what happens behind the scenes of `hello-world`. This is what happens
+What happens when you run the `hello-world `command?
 
-1. Docker will check if cached `hello-world` image already exists on your machine.
-2. If it doesn't exist on the machine, Docker will download the `hello-world` image from the container registry (in this case, the default Docker Hub)
-3. Using the downloaded or local `hello-world` image, Docker creates a new container.
-4. Docker daemon starts the container and whatever defined in the image is executed. 
-5. After all the processes are executed, the container exits
+1. Docker checks if the `hello-world` image is cached locally.
+2. If it’s not found, Docker downloads the image from the default registry (Docker Hub).
+3. Using the downloaded or cached image, Docker creates a new container.
+4. The Docker daemon starts the container and executes the predefined instructions in the image.
+5. After execution, the container exits.
 
-### Running something (slightly) more advanced
+### Running an Ubuntu container
 
-Now, we will run Ubuntu container. Run the following command
+Now, we will run Ubuntu container. To start an Ubuntu container:
 
 ```bash
 docker run -it ubuntu bash
 ```
 
-the `-it` option allows to start an interactive terminal session inside a running container. Here, `ubuntu` is the container image to be downloaded and run. `bash` is the command to be executed inside the container. Therefore, this command will you give an interactive shell session within the container. 
+Here’s what this does:
+
+- The `-it` flag launches an interactive terminal session.
+- `ubuntu` specifies the container image to run.
+- `bash` defines the command executed inside the container.
+
+This command provides a shell session inside the container.
+
+### Running a Python container
 
 Next, we will run python container using the following command
 
@@ -77,9 +85,9 @@ Now, you will be see a bash shell welcoming you :)
 
 ## Running Containers using Dockerfile
 
-In reality, our Docker container will be much more complicated than running `hello-world` or invoking a bash shell. In this case, running container like this using CLI will be huge pain! To make it easier, we can use **Dockerfile** to set up the container. 
+In real-world scenarios, containers are often more complex than simple commands like hello-world. Managing such setups directly via CLI can be tedious. This is where a **Dockerfile** comes in handy.
 
-Dockerfile to replicate the functionality of the above command `docker run -it --entrypoint=bash python:3.9` is 
+To replicate the behavior of the previous command (`docker run -it --entrypoint=bash python:3.9`), create the following Dockerfile:
 
 ```dockerfile
 # Use the Python 3.9 base image
@@ -89,16 +97,16 @@ FROM python:3.9
 ENTRYPOINT ["bash"]
 ```
 
-We save this as `Dockerfile` (Without any extension). We will build a docker image using the `Dockerfile` by running the command below in the directory where `Dockerfile` is located. The name of the docker image wil be `python_bash:v1`
+Save this as Dockerfile (no extension). We will build a docker image using the `Dockerfile` by running the command below in the directory where `Dockerfile` is located. The name of the docker image wil be `python_bash:v1`
 
 ```bash
 docker build -t python_bash:v1 .
 ```
 
-Once the image is built successfully, we will run the Docker image. 
+Once the image is built, run:
 
 ```bash
 docker run -it python_bash:v1 
 ```
 
-Tada! Now we did the same task using `Dockerfile`! 
+Tada! You’ve achieved the same functionality as before but now using a `Dockerfile` for cleaner, repeatable setup.
