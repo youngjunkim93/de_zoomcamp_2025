@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Data Engineering Zoomcamp - Week 1 - Docker"
-permalink: /week1_docker
+permalink: /1_1_docker
 ---
 As I embark on my journey into the data field, I’ve decided to kickstart the process by joining the Data Engineering Zoomcamp—a **free** five-week virtual bootcamp organized by [Datatalks.club](https://datatalks.club/). With data engineering playing a pivotal role in ensuring the success of data science and machine learning projects, this program is an exciting opportunity to dive into key concepts and tools while gaining hands-on experience with real-world data.
 
